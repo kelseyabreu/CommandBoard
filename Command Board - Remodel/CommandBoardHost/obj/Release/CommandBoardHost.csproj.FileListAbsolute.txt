@@ -1,0 +1,10 @@
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardHost\obj\Release\CommandBoardHost.csprojResolveAssemblyReference.cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardHost\obj\Release\CommandBoardHost.Form1.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardHost\obj\Release\Command_Board.Form2.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardHost\obj\Release\CommandBoardHost.Properties.Resources.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardHost\obj\Release\CommandBoardHost.csproj.GenerateResource.Cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardHost\obj\Release\CommandBoardHost.Form2.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Release\CommandBoardHost.Form1.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Release\CommandBoardHost.Form2.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Release\CommandBoardHost.Properties.Resources.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Release\CommandBoardHost.csproj.GenerateResource.Cache

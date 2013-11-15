@@ -1,0 +1,14 @@
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\CommandBoardServiceLibrary.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\Command Board.exe
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\Command Board.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\obj\Release\CommandBoardServiceLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\obj\Release\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\obj\Release\CommandBoardServiceLibrary.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\bin\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\bin\CommandBoardServiceLibrary.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\bin\Command Board.exe
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\bin\Command Board.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\obj\Release\CommandBoardServiceLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\obj\Release\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardServiceLibrary\obj\Release\CommandBoardServiceLibrary.pdb

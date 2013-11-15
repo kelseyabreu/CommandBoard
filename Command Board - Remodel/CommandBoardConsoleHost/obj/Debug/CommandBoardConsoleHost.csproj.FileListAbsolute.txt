@@ -1,0 +1,10 @@
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\CommandBoardConsoleHost.exe.config
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\CommandBoardConsoleHost.exe
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\CommandBoardConsoleHost.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Command Board.exe
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Command Board.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\CommandBoardServiceLibrary.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\obj\Debug\CommandBoardConsoleHost.csprojResolveAssemblyReference.cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\obj\Debug\CommandBoardConsoleHost.exe
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\obj\Debug\CommandBoardConsoleHost.pdb

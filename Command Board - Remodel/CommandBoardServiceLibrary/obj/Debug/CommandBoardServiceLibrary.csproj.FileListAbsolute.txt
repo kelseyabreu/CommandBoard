@@ -1,0 +1,7 @@
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\obj\Debug\CommandBoardServiceLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\CommandBoardServiceLibrary.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\Command Board.exe
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\bin\Command Board.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\obj\Debug\CommandBoardServiceLibrary.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board\CommandBoardServiceLibrary\obj\Debug\CommandBoardServiceLibrary.pdb

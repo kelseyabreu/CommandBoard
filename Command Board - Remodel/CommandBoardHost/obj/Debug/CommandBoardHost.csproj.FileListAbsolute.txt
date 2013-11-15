@@ -1,0 +1,4 @@
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Debug\CommandBoardHost.Form1.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Debug\CommandBoardHost.Form2.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Debug\CommandBoardHost.Properties.Resources.resources
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardHost\obj\Debug\CommandBoardHost.csproj.GenerateResource.Cache
