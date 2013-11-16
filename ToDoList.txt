@@ -1,0 +1,16 @@
+Get Cards working
+Get Skills working
+Have deadzones take away money
+Get single click working
+Have checkpoints give you money and ards
+
+
+Get upgrades working
+Get Home working
+Get Specials working
+   Implement status next to or in playerPanel
+
+Get Online working
+Have deadzones take away money 
+   if another player takes cloud away
+
