@@ -28,7 +28,15 @@ namespace Command_Board {
         Color[] propertyBackground = {Color.FromArgb(255,106,106),Color.FromArgb(106,106,255),Color.FromArgb(106,255,106),Color.FromArgb(97,97,97)};
         int totalValue;
         int playerNumber;
-        int rolled = 0;
+        int Rolled;
+        public int rolled { set{
+            Rolled = value;
+            movesLeftLabel.Text = "Moves Left: " + value;
+        }
+            get {
+                return Rolled;
+            }
+        }
         int isRolling = 0;
         int numberOfRolls = 1;
         int numOfPlayers;
@@ -342,6 +350,7 @@ namespace Command_Board {
             rect.Width--;
             rect.Height--;
             e.Graphics.DrawRectangle(Pens.Black, rect);
+            //playerPanels.Controls.Find(
         }
 
         private void playerPanels_Paint(object sender, PaintEventArgs e) {
@@ -354,6 +363,11 @@ namespace Command_Board {
         public Panel setUpPanels(int i) {
             Panel p;
             Label l1, l2, l3, l4, l5;
+            Panel redPanel, yellowPanel, greenPanel, bluePanel;
+            redPanel = new System.Windows.Forms.Panel();
+            yellowPanel = new System.Windows.Forms.Panel();
+            greenPanel = new System.Windows.Forms.Panel();
+            bluePanel = new System.Windows.Forms.Panel();
             p = new System.Windows.Forms.Panel();
             l1 = new System.Windows.Forms.Label();
             l2 = new System.Windows.Forms.Label();
@@ -371,6 +385,10 @@ namespace Command_Board {
             p.Controls.Add(l3);
             p.Controls.Add(l2);
             p.Controls.Add(l1);
+            p.Controls.Add(greenPanel);
+            p.Controls.Add(bluePanel);
+            p.Controls.Add(yellowPanel);
+            p.Controls.Add(redPanel);
             p.Location = new System.Drawing.Point(0, 0 + 100 * (i - 1));
             p.MaximumSize = new System.Drawing.Size(200, 100);
             p.AutoSize = true;
@@ -434,6 +452,43 @@ namespace Command_Board {
             l5.TabIndex = 4;
             l5.DataBindings.Add(new Binding("Text", players[i - 1], "totalValueS"));
             //l5.Text = "1000";
+
+            //Green Panels
+            greenPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            greenPanel.Location = new System.Drawing.Point(142, 19);
+            greenPanel.Name = "greenPanel";
+            greenPanel.Size = new System.Drawing.Size(15, 15);
+            greenPanel.TabIndex = 0;
+            greenPanel.Visible = true;
+            greenPanel.BackColor = SystemColors.Control;
+            // 
+            // bluePanel
+            // 
+            bluePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            bluePanel.Location = new System.Drawing.Point(142, 3);
+            bluePanel.Name = "bluePanel";
+            bluePanel.Size = new System.Drawing.Size(15, 15);
+            bluePanel.TabIndex = 0;
+            bluePanel.BackColor = SystemColors.Control;
+            // 
+            // redPanel
+            // 
+            redPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            redPanel.Location = new System.Drawing.Point(158, 3);
+            redPanel.Name = "redPanel";
+            redPanel.Size = new System.Drawing.Size(15, 15);
+            redPanel.TabIndex = 5;
+            redPanel.BackColor = SystemColors.Control;
+            // 
+            // yellowPanel
+            // 
+            yellowPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            yellowPanel.Location = new System.Drawing.Point(158, 19);
+            yellowPanel.Name = "yellowPanel";
+            yellowPanel.Size = new System.Drawing.Size(15, 15);
+            yellowPanel.TabIndex = 5;
+            yellowPanel.BackColor = SystemColors.Control;
+
 
             return p;
         }
@@ -534,6 +589,7 @@ namespace Command_Board {
                 players[i].totalValue = 1000;
                 players[i].row = row;
                 players[i].column = col;
+                players[i].checkPoints = new List<Location>();
             }
         }
 
@@ -894,6 +950,26 @@ namespace Command_Board {
                 rolled = 0;
                 BuyPayPass(players[playerNumber - 1].row,players[playerNumber - 1].column);
                 DrawChar(flowLayoutPanel1.CreateGraphics());
+
+                //Check if any of them are checkpoints
+                for (int i = 0; i < selectionBox.Items.Count; i++) {
+                    Location l = (Location)selectionBox.Items[i];
+
+                    //Highlight them in square
+                    if (state.types[l.row][l.column] == (int)SquareType.Checkpoints) {
+                        if (state.innerShapeColor[l.row][l.column] == Color.Blue) {
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("bluePanel", false)[0].BackColor = Color.Blue;
+                        } else if (state.innerShapeColor[l.row][l.column] == Color.Green){
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("greenPanel", false)[0].BackColor = Color.Green;
+                        } else if (state.innerShapeColor[l.row][l.column] == Color.Yellow) {
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("yellowPanel", false)[0].BackColor = Color.Yellow;
+                        } else {
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("redPanel", false)[0].BackColor = Color.Red;
+                        }
+                        if(players[playerNumber-1].checkPoints.Count <5)
+                            players[playerNumber - 1].checkPoints.Add(l);
+                    }
+                }
                 selectionBox.Items.Clear();
             } else {
                 MessageBox.Show("Invalid Movements");
@@ -1020,6 +1096,7 @@ namespace Command_Board {
 
     }
 
+    [Serializable]
     public class Location : IEquatable<Location> {
         public int column { set; get; }
         public int row { set; get; }
@@ -1092,6 +1169,16 @@ enum Direction : int {
     LEFT,
     UP,
     DOWN
+};
+
+enum SquareType : int {
+    Properties,
+    Specials,
+    Checkpoints,
+    Lines,
+    Home,
+    Deadzones,
+    MovingCloud
 };
 
 

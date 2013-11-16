@@ -56,6 +56,9 @@ namespace Command_Board
         [DataMember]
         public int column { set; get; }
 
+        [DataMember]
+        public List<Location> checkPoints { set; get; }
+
         private void OnPropertyChanged(string property) {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
