@@ -25,14 +25,15 @@ namespace Command_Board {
         Player[] players = new Player[4];
         bool win = false;
         Color[] background = { Color.Red, Color.Blue, Color.Green, Color.Black, Color.Yellow };
-        Color[] propertyBackground = {Color.FromArgb(255,106,106),Color.FromArgb(106,106,255),Color.FromArgb(106,255,106),Color.FromArgb(97,97,97)};
+        Color[] propertyBackground = { Color.FromArgb(255, 106, 106), Color.FromArgb(106, 106, 255), Color.FromArgb(106, 255, 106), Color.FromArgb(97, 97, 97) };
         int totalValue;
         int playerNumber;
         int Rolled;
-        public int rolled { set{
-            Rolled = value;
-            movesLeftLabel.Text = "Moves Left: " + value;
-        }
+        public int rolled {
+            set {
+                Rolled = value;
+                movesLeftLabel.Text = "Moves Left: " + value;
+            }
             get {
                 return Rolled;
             }
@@ -41,7 +42,7 @@ namespace Command_Board {
         int numberOfRolls = 1;
         int numOfPlayers;
         bool selling = false;
-        bool upgradeAllowed=true;
+        bool upgradeAllowed = true;
         Image smallBlueHome = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\smallBlueHome.png");
         Image bigBlueHome = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\bigBlueHome.png");
         Image smallBlueCloud = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\smallBlueCloud.png");
@@ -611,7 +612,6 @@ namespace Command_Board {
                 }
 
                 MessageBox.Show(s + ". A total of " + rolled);
-
                 isRolling = 1;
             }
         }
@@ -640,7 +640,7 @@ namespace Command_Board {
 
                 if (Control.ModifierKeys == Keys.Control && selectionBox1.SelectedIndex != 3) {
                     listOfSelection.Add(new Location(displayedColumnIndex, displayedRowIndex));
-                } else if(selectionBox1.SelectedIndex != 3){
+                } else if (selectionBox1.SelectedIndex != 3) {
                     listOfSelection.Clear();
                 }
 
@@ -666,7 +666,7 @@ namespace Command_Board {
                     levelPanel.Visible = false;
 
                 bool con = true;
-                
+
                 //Checks to see if user selected square they are standing on, or the square they
                 //just moved from
                 if (selectionBox.Items.Count > 0) {
@@ -713,26 +713,26 @@ namespace Command_Board {
 
             if (lvl == 0) {
                 return 0;
-            }else if (lvl == 1) {
-                return value/2;
-            }else if(lvl ==2){
-                return value*2;
-            }else if(lvl ==3){
-                return value*4;
-            }else if(lvl ==4){
-                return value*7;
+            } else if (lvl == 1) {
+                return value / 2;
+            } else if (lvl == 2) {
+                return value * 2;
+            } else if (lvl == 3) {
+                return value * 4;
+            } else if (lvl == 4) {
+                return value * 7;
             }
             return -1;
         }
 
         private int TollAmount(int value, int lvl) {
-            
-            if(lvl == 0){
-                return (int)(value *.4);
-            }else if (lvl == 1) {
-                return (int)(value *.6);
+
+            if (lvl == 0) {
+                return (int)(value * .4);
+            } else if (lvl == 1) {
+                return (int)(value * .6);
             } else if (lvl == 2) {
-                return (int)(value *1.5);
+                return (int)(value * 1.5);
             } else if (lvl == 3) {
                 return (int)(value * 2.5);
             } else if (lvl == 4) {
@@ -847,6 +847,7 @@ namespace Command_Board {
 
         private void submitButton_Click(object sender, EventArgs e) {
             bool valid = true;
+            int originalDirection = direction;
             Location cloudStart = null;
             Location cloudEnd = null;
             Location currentlyOn = new Location(players[playerNumber - 1].column, players[playerNumber - 1].row);
@@ -868,78 +869,62 @@ namespace Command_Board {
                     if (cloudStart != null && state.types[l.row][l.column] == (int)SquareType.Deadzones)
                         cloudEnd = l;
 
-                    #region if statements
-                    int lineDirection = CheckForLines(currentlyOn, l);
-                    if (direction == (int)Direction.NONE) {
-                        if((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
-                            direction = (int)Direction.RIGHT;
-                        } else if((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
-                            direction = (int)Direction.LEFT;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
-                            direction = (int)Direction.UP;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
-                            direction = (int)Direction.DOWN;
-                        } else {
-                            valid = false;
-                            break;
-                        }
-                    } else if (direction == (int)Direction.LEFT) {
-                        if((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
-                            direction = (int)Direction.LEFT;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
-                            direction = (int)Direction.UP;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
-                            direction = (int)Direction.DOWN;
-                        } else {
-                            valid = false;
-                            break;
-                        }
-                    } else if (direction == (int)Direction.RIGHT) {
-                        if((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
-                            direction = (int)Direction.RIGHT;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
-                            direction = (int)Direction.UP;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
-                            direction = (int)Direction.DOWN;
-                        } else {
-                            valid = false;
-                            break;
-                        }
-                    } else if (direction == (int)Direction.UP) {
-                        if((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
-                            direction = (int)Direction.RIGHT;
-                        } else if((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
-                            direction = (int)Direction.LEFT;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
-                            direction = (int)Direction.UP;
-                        } else {
-                            valid = false;
-                            break;
-                        }
-                    } else if (direction == (int)Direction.DOWN) {
-                        if((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
-                            direction = (int)Direction.RIGHT;
-                        } else if((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
-                            direction = (int)Direction.LEFT;
-                        } else if((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
-                            direction = (int)Direction.DOWN;
-                        } else {
-                            valid = false;
-                            break;
-                        }
+                    valid = checkDirections(currentlyOn, l);
+
+                    if (valid == false) {
+                        direction = originalDirection;
+                        break;
                     }
 
-                    #endregion
                     currentlyOn = l;
                 }
             } else if (selectionBox.Items.Count > rolled) {
                 MessageBox.Show("You moved too much!");
                 return;
-            } else if (selectionBox.Items.Count < rolled) {
+            } else if (selectionBox.Items.Count < rolled && selectionBox.Items.Count != 1) {
                 MessageBox.Show("You didn't move enough!");
                 return;
-            } 
-            
+            } else if (selectionBox.Items.Count == 1) {
+                valid = false;
+            }
+
+            //This takes care of single click 
+            if (valid == false && selectionBox.Items.Count == 1) {
+                Location point = (Location)selectionBox.Items[0];
+                endPositions.Clear();
+                checkPossibleWays(rolled, new Location(players[playerNumber - 1].column, players[playerNumber - 1].row), new Location(players[playerNumber - 1].column, players[playerNumber - 1].row), new List<Location>());
+                
+                //Go through each path
+                for (int i = 0; i < endPositions.Count; i++) {
+                    List<Location> path = endPositions.ElementAt<List<Location>>(i);
+                    Location endP = path.Last<Location>();
+                    cloudStart = null;
+                    cloudEnd = null;
+                    bool bad = true;
+                    direction = originalDirection;
+
+                    //Make sure the paths are going the right direction and move the cloud
+                    for (int j = 0; j < path.Count - 1; j++) {
+                        currentlyOn = path.ElementAt<Location>(j);
+                        Location l = path.ElementAt<Location>(j + 1);
+                        if (checkDirections(currentlyOn, l) == false)
+                            bad = false;
+
+                        if (state.types[currentlyOn.row][currentlyOn.column] == (int)SquareType.MovingCloud)
+                            cloudStart = currentlyOn;
+
+                        if (cloudStart != null && state.types[l.row][l.column] == (int)SquareType.Deadzones)
+                            cloudEnd = l;
+                    }
+                    if (endP.Equals(point) && bad) {
+                        selectionBox.Items.AddRange(path.ToArray()); 
+                        valid = true;
+                        currentlyOn = endP;
+                        break;
+                    }
+                }
+            }
+
             if (valid == true) {
                 int row = players[playerNumber - 1].row;
                 int col = players[playerNumber - 1].column;
@@ -960,11 +945,11 @@ namespace Command_Board {
 
                 prevInnerRectBrush = new SolidBrush(state.innerRectColor[row][col]);
                 prevInnerShapeBrush = new SolidBrush(state.innerShapeColor[row][col]);
-                prevRectColor = new Pen(state.rectColor[row][col],1f);
-                prevShapeColor = new Pen(state.shapeColor[row][col],9f);
+                prevRectColor = new Pen(state.rectColor[row][col], 1f);
+                prevShapeColor = new Pen(state.shapeColor[row][col], 9f);
 
                 //Draw the Original square where the player started
-                drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());  
+                drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());
 
                 players[playerNumber - 1].column = currentlyOn.column;
                 players[playerNumber - 1].row = currentlyOn.row;
@@ -972,7 +957,7 @@ namespace Command_Board {
                 DrawChar(flowLayoutPanel1.CreateGraphics());
 
                 rolled = 0;
-                BuyPayPass(players[playerNumber - 1].row,players[playerNumber - 1].column);
+                BuyPayPass(players[playerNumber - 1].row, players[playerNumber - 1].column);
                 DrawChar(flowLayoutPanel1.CreateGraphics());
 
                 //Check if any of them are checkpoints
@@ -983,71 +968,223 @@ namespace Command_Board {
                     if (state.types[l.row][l.column] == (int)SquareType.Checkpoints) {
                         if (state.innerShapeColor[l.row][l.column] == Color.Blue) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("bluePanel", false)[0].BackColor = Color.Blue;
-                        } else if (state.innerShapeColor[l.row][l.column] == Color.Green){
+                        } else if (state.innerShapeColor[l.row][l.column] == Color.Green) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("greenPanel", false)[0].BackColor = Color.Green;
                         } else if (state.innerShapeColor[l.row][l.column] == Color.Yellow) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("yellowPanel", false)[0].BackColor = Color.Yellow;
                         } else {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("redPanel", false)[0].BackColor = Color.Red;
                         }
-                        if(players[playerNumber-1].checkPoints.Count <5)
+                        if (players[playerNumber - 1].checkPoints.Count < 5)
                             players[playerNumber - 1].checkPoints.Add(l);
                     }
                 }
                 selectionBox.Items.Clear();
             } else {
+                direction = originalDirection;
                 MessageBox.Show("Invalid Movements");
             }
         }
 
-        private int CheckForLines(Location current,Location end) {
+        public bool checkDirections(Location currentlyOn, Location l) {
+            bool valid = true;
+            int lineDirection = CheckForLines(currentlyOn, l);
+            if (direction == (int)Direction.NONE) {
+                if ((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
+                    direction = (int)Direction.RIGHT;
+                } else if ((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
+                    direction = (int)Direction.LEFT;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
+                    direction = (int)Direction.UP;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
+                    direction = (int)Direction.DOWN;
+                } else {
+                    valid = false;
+                    return valid;
+                }
+            } else if (direction == (int)Direction.LEFT) {
+                if ((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
+                    direction = (int)Direction.LEFT;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
+                    direction = (int)Direction.UP;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
+                    direction = (int)Direction.DOWN;
+                } else {
+                    valid = false;
+                    return valid;
+                }
+            } else if (direction == (int)Direction.RIGHT) {
+                if ((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
+                    direction = (int)Direction.RIGHT;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
+                    direction = (int)Direction.UP;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
+                    direction = (int)Direction.DOWN;
+                } else {
+                    valid = false;
+                    return valid;
+                }
+            } else if (direction == (int)Direction.UP) {
+                if ((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
+                    direction = (int)Direction.RIGHT;
+                } else if ((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
+                    direction = (int)Direction.LEFT;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row - 1) || lineDirection == 3) {
+                    direction = (int)Direction.UP;
+                } else {
+                    valid = false;
+                    return valid;
+                }
+            } else if (direction == (int)Direction.DOWN) {
+                if ((currentlyOn.row == l.row && l.column == currentlyOn.column + 1) || lineDirection == 1) {
+                    direction = (int)Direction.RIGHT;
+                } else if ((currentlyOn.row == l.row && l.column == currentlyOn.column - 1) || lineDirection == 2) {
+                    direction = (int)Direction.LEFT;
+                } else if ((currentlyOn.column == l.column && l.row == currentlyOn.row + 1) || lineDirection == 4) {
+                    direction = (int)Direction.DOWN;
+                } else {
+                    valid = false;
+                    return valid;
+                }
+            }
+
+            return valid;
+        }
+
+        List<List<Location>> endPositions = new List<List<Location>>();
+
+        private void checkPossibleWays(int movesLeft, Location position, Location previousPosition, List<Location> path) {
+            path.Add(position);
+            if (movesLeft == 0) {
+                List<Location> onePath = createPath(path);
+                endPositions.Add(onePath);
+            } else {
+                //To the right
+                if (position.column + 1 != state.gridSize.Width && (
+                    (state.types[position.row][position.column + 1] == (int)SquareType.Properties && state.values[position.row][position.column + 1] > 0) ||
+                    (state.types[position.row][position.column + 1] != (int)SquareType.Properties)
+                    )) {
+                    Location p = new Location(position.column + 1, position.row);
+                    //Makes sure to not add the square where it came from
+                    if (previousPosition.Equals(p) == false) {
+                        //In case it's a line. 
+                        if (state.types[position.row][position.column + 1] == (int)SquareType.Lines)
+                            checkPossibleWays(movesLeft, p, position, path);
+                        else
+                            checkPossibleWays(movesLeft - 1, p, position, path);
+                    }
+                }
+
+                //To the left
+                if (position.column - 1 != -1 && (
+                    (state.types[position.row][position.column - 1] == (int)SquareType.Properties && state.values[position.row][position.column - 1] > 0) ||
+                    (state.types[position.row][position.column - 1] != (int)SquareType.Properties)
+                    )) {
+                    Location p = new Location(position.column - 1, position.row);
+                    //Makes sure to not add the square where it came from
+                    if (previousPosition.Equals(p) == false) {
+                        //In case it's a line. 
+                        if (state.types[position.row][position.column - 1] == (int)SquareType.Lines)
+                            checkPossibleWays(movesLeft, p, position, path);
+                        else
+                            checkPossibleWays(movesLeft - 1, p, position, path);
+                    }
+                }
+
+                //Up
+                if (position.row - 1 != -1 && (
+                    (state.types[position.row - 1][position.column] == (int)SquareType.Properties && state.values[position.row - 1][position.column] > 0) ||
+                    (state.types[position.row - 1][position.column] != (int)SquareType.Properties)
+                    )) {
+
+                    Location p = new Location(position.column, position.row - 1);
+                    //Makes sure to not add the square where it came from
+                    if (previousPosition.Equals(p) == false) {
+                        //In case it's a line. 
+                        if (state.types[position.row - 1][position.column] == (int)SquareType.Lines)
+                            checkPossibleWays(movesLeft, p, position, path);
+                        else
+                            checkPossibleWays(movesLeft - 1, p, position, path);
+                    }
+                }
+
+                //Down
+                if (position.row + 1 != state.gridSize.Height && (
+                    (state.types[position.row + 1][position.column] == (int)SquareType.Properties && state.values[position.row + 1][position.column] > 0) ||
+                    (state.types[position.row + 1][position.column] != (int)SquareType.Properties)
+                    )) {
+
+                    Location p = new Location(position.column, position.row + 1);
+                    //Makes sure to not add the square where it came from
+                    if (previousPosition.Equals(p) == false) {
+                        //In case it's a line. 
+                        if (state.types[position.row + 1][position.column] == (int)SquareType.Lines)
+                            checkPossibleWays(movesLeft, p, position, path);
+                        else
+                            checkPossibleWays(movesLeft - 1, p, position, path);
+                    }
+                }
+            }
+            path.RemoveAt(path.Count - 1);
+        }
+
+        private List<Command_Board.Location> createPath(List<Command_Board.Location> path) {
+            List<Location> onePath = new List<Location>();
+            for (int i = 0; i < path.Count; i++) {
+                onePath.Add(path.ElementAt<Location>(i));
+            }
+
+            return onePath;
+        }
+
+        private int CheckForLines(Location current, Location end) {
             int valid = -1;
 
-            if (current.row == end.row && Math.Abs(end.column-current.column) >=2) {
+            if (current.row == end.row && Math.Abs(end.column - current.column) >= 2) {
 
                 //Takes care of lines going to the right
                 if (end.column > current.column) {
-                        int counter = 0;
-                        for (int j = current.column + 1; j < end.column; j++) {
-                            if (state.types[current.row][j] == 3)
-                                counter++;
-                        }
+                    int counter = 0;
+                    for (int j = current.column + 1; j < end.column; j++) {
+                        if (state.types[current.row][j] == 3)
+                            counter++;
+                    }
 
-                        if (counter == end.column - current.column - 1)
-                            valid = (int)Direction.RIGHT;
+                    if (counter == end.column - current.column - 1)
+                        valid = (int)Direction.RIGHT;
                 } else {
                     //takes care of lines going to the left
-                        int counter = 0;
-                        for (int j = end.column + 1; j < current.column; j++) {
-                            if (state.types[current.row][j] == 3)
-                                counter++;
-                        }
+                    int counter = 0;
+                    for (int j = end.column + 1; j < current.column; j++) {
+                        if (state.types[current.row][j] == 3)
+                            counter++;
+                    }
 
-                        if (counter == current.column - end.column - 1)
-                            valid = (int)Direction.LEFT;
+                    if (counter == current.column - end.column - 1)
+                        valid = (int)Direction.LEFT;
                 }
             } else if (current.column == end.column && Math.Abs(end.row - current.row) >= 2) {
 
                 //Takes care of lines going to the bottom
                 if (end.row > current.row) {
-                        int counter = 0;
-                        for (int j = current.row + 1; j < end.row; j++) {
-                            if (state.types[j][current.column] == 3)
-                                counter++;
-                        }
+                    int counter = 0;
+                    for (int j = current.row + 1; j < end.row; j++) {
+                        if (state.types[j][current.column] == 3)
+                            counter++;
+                    }
 
-                        if (counter == end.row - current.row - 1)
-                            valid = (int)Direction.DOWN;
+                    if (counter == end.row - current.row - 1)
+                        valid = (int)Direction.DOWN;
                 } else {
                     //takes care of lines going to the top
-                        int counter = 0;
-                        for (int j = end.row + 1; j < current.row; j++) {
-                            if (state.types[j][current.column] == 3)
-                                counter++;
-                        }
+                    int counter = 0;
+                    for (int j = end.row + 1; j < current.row; j++) {
+                        if (state.types[j][current.column] == 3)
+                            counter++;
+                    }
 
-                        if (counter == current.row - end.row - 1)
-                            valid = (int)Direction.UP;
+                    if (counter == current.row - end.row - 1)
+                        valid = (int)Direction.UP;
                 }
             }
 
@@ -1055,13 +1192,13 @@ namespace Command_Board {
         }
 
         private void BuyPayPass(int row, int col) {
-            Location l = new Location(col,row);
+            Location l = new Location(col, row);
 
             //0 is You can Buy it
             //1 you own it
             //2 you have to pay
-            int path =0;
-            int personReceivingMoney=0;
+            int path = 0;
+            int personReceivingMoney = 0;
             for (int i = 0; i < state.numOfPlayers; i++) {
                 if (state.owned[i].Contains(l)) {
                     if (i == playerNumber - 1) {
@@ -1099,7 +1236,7 @@ namespace Command_Board {
                 } else {
                     finishButton_Click(new object(), new EventArgs());
                 }
-            } else if (path == 2){
+            } else if (path == 2) {
                 DialogResult = MessageBox.Show("Would you like to upgrade this Property?", "Upgrade?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (DialogResult == DialogResult.Yes) {
                     upgradeAllowed = true;
