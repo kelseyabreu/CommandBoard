@@ -847,6 +847,8 @@ namespace Command_Board {
 
         private void submitButton_Click(object sender, EventArgs e) {
             bool valid = true;
+            Location cloudStart = null;
+            Location cloudEnd = null;
             Location currentlyOn = new Location(players[playerNumber - 1].column, players[playerNumber - 1].row);
 
             if (rolled == 0) {
@@ -859,6 +861,13 @@ namespace Command_Board {
                         MessageBox.Show("You selected to move to a invalid square");
                         return;
                     }
+
+                    if (state.types[currentlyOn.row][currentlyOn.column] == (int)SquareType.MovingCloud)
+                        cloudStart = currentlyOn;
+
+                    if (cloudStart != null && state.types[l.row][l.column] == (int)SquareType.Deadzones)
+                        cloudEnd = l;
+
                     #region if statements
                     int lineDirection = CheckForLines(currentlyOn, l);
                     if (direction == (int)Direction.NONE) {
@@ -935,13 +944,28 @@ namespace Command_Board {
                 int row = players[playerNumber - 1].row;
                 int col = players[playerNumber - 1].column;
 
+                //Draw a deadzone and cloud if player passed over it
+                if (cloudStart != null && cloudEnd != null) {
+                    prevInnerRectBrush = new SolidBrush(state.innerRectColor[cloudStart.row][cloudStart.column]);
+                    prevInnerShapeBrush = new SolidBrush(state.innerShapeColor[cloudStart.row][cloudStart.column]);
+                    prevRectColor = new Pen(state.rectColor[cloudStart.row][cloudStart.column], 1f);
+                    prevShapeColor = new Pen(state.shapeColor[cloudStart.row][cloudStart.column], 9f);
+
+                    state.types[cloudStart.row][cloudStart.column] = (int)SquareType.Deadzones;
+                    state.types[cloudEnd.row][cloudEnd.column] = (int)SquareType.MovingCloud;
+
+                    drawSquare(cloudStart.row, cloudStart.column, state.circleGrid[cloudStart.row][cloudStart.column], state.rectangleGrid[cloudStart.row][cloudStart.column], flowLayoutPanel1.CreateGraphics());
+                    drawSquare(cloudEnd.row, cloudEnd.column, state.circleGrid[cloudEnd.row][cloudEnd.column], state.rectangleGrid[cloudEnd.row][cloudEnd.column], flowLayoutPanel1.CreateGraphics());
+                }
+
                 prevInnerRectBrush = new SolidBrush(state.innerRectColor[row][col]);
                 prevInnerShapeBrush = new SolidBrush(state.innerShapeColor[row][col]);
                 prevRectColor = new Pen(state.rectColor[row][col],1f);
                 prevShapeColor = new Pen(state.shapeColor[row][col],9f);
 
-                drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());
-                
+                //Draw the Original square where the player started
+                drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());  
+
                 players[playerNumber - 1].column = currentlyOn.column;
                 players[playerNumber - 1].row = currentlyOn.row;
                 proxy.setPlayer(playerNumber - 1, players[playerNumber - 1]);
