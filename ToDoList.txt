@@ -1,11 +1,11 @@
 Get Cards working
 Get Skills working
 Have deadzones take away money
-Get single click working
+Get single click working                           -----Finished
 Have checkpoints give you money and ards
 
 
-Get upgrades working
+Get upgrades working                               -----Finished
 Get Home working
 Get Specials working
    Implement status next to or in playerPanel
