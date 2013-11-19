@@ -35,3 +35,15 @@ C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Co
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\System.Windows.Forms.dll
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\System.Xml.dll
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\System.Xml.Linq.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\bigBlueCloud.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\bigBlueHome.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\char.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\char2.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\char3.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\char4.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\smallBlueCloud.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Resources\smallBlueHome.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Properties\Resources.resx
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Properties\Resources.Designer.cs
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Properties\Settings.Designer.cs
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Release\Properties\Settings.settings

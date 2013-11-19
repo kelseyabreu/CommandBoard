@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Resources;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -42,15 +43,17 @@ namespace Command_Board {
         int numberOfRolls = 1;
         int numOfPlayers;
         bool selling = false;
-        bool upgradeAllowed = true;
-        Image smallBlueHome = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\smallBlueHome.png");
-        Image bigBlueHome = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\bigBlueHome.png");
-        Image smallBlueCloud = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\smallBlueCloud.png");
-        Image bigBlueCloud = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\bigBlueCloud.png");
-        Image blackGuy = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\char.png");
-        Image no = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\no.png");
-        Image no1 = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\char2.png");
-        Image no2 = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\char3.png");
+        bool upgradeAllowed = false;
+        int mustUpgradeRow = -1;
+        int mustUpgradeColumn = -1;
+        Image smallBlueHome = Properties.Resources.smallBlueHome;
+        Image bigBlueHome = Properties.Resources.bigBlueHome;
+        Image smallBlueCloud = Properties.Resources.smallBlueCloud;
+        Image bigBlueCloud = Properties.Resources.bigBlueCloud;
+        Image blackGuy = Properties.Resources._char;
+        Image no = Properties.Resources.char4;
+        Image no1 = Properties.Resources.char2;
+        Image no2 = Properties.Resources.char3;
         Image[] pics = new Image[4];
         int type;
         int turns = 1;
@@ -333,7 +336,7 @@ namespace Command_Board {
             graphics.DrawRectangle(prevRectColor, rectangle);
 
             if (state.values[row][column] != 0) {
-                String s = state.values[row][column].ToString();
+                String s = (state.values[row][column] + UpgradeCost(state.values[row][column], state.lvls[row][column])).ToString();
                 PointF pf = new PointF(rectangle.X + 27, rectangle.Y + 27);
                 StringFormat sf = new StringFormat();
                 Font f = new Font("Calibri", 11, FontStyle.Bold);
@@ -654,16 +657,28 @@ namespace Command_Board {
 
 
                 if (state.values[displayedRowIndex][displayedColumnIndex] > 0) {
+                    tollLabel.Text = "Toll : " + TollAmount(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                    levelLabel.Text = "Current Level: " + state.lvls[displayedRowIndex][displayedColumnIndex];
+                    int totalValueAlready = UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                    for (int i = 0; i < 5; i++) {
+                        ((RadioButton)radioPanel.Controls[i]).Checked = false;
+                        if (state.lvls[displayedRowIndex][displayedColumnIndex] >= i)
+                            radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, 0, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
+                        else
+                            radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], i) - totalValueAlready, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
 
-                    radioButton0.Text = String.Format("Level {0}. {1,5} | {2,5}", 0, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 0), TollAmount(state.values[displayedRowIndex][displayedColumnIndex], 0));
-                    radioButton1.Text = String.Format("Level {0}. {1,5} | {2,5}", 1, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 1), TollAmount(state.values[displayedRowIndex][displayedColumnIndex], 1));
-                    radioButton2.Text = String.Format("Level {0}. {1,5} | {2,5}", 2, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 2), TollAmount(state.values[displayedRowIndex][displayedColumnIndex], 2));
-                    radioButton3.Text = String.Format("Level {0}. {1,5} | {2,5}", 3, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 3), TollAmount(state.values[displayedRowIndex][displayedColumnIndex], 3));
-                    radioButton4.Text = String.Format("Level {0}. {1,5} | {2,5}", 4, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 4), TollAmount(state.values[displayedRowIndex][displayedColumnIndex], 4));
+                        if (players[playerNumber - 1].cash < UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], i) - totalValueAlready)
+                            radioPanel.Controls[i].Enabled = false;
+                        else
+                            radioPanel.Controls[i].Enabled = true;
+                    }
 
                     levelPanel.Visible = true;
-                } else
+                    upgradeButton.Visible = true;
+                } else {
                     levelPanel.Visible = false;
+                    upgradeButton.Visible = false;
+                }
 
                 bool con = true;
 
@@ -705,6 +720,8 @@ namespace Command_Board {
                             finishButton_Click(new Object(), new EventArgs());
                         }
                     }
+                } else if (upgradeAllowed) {
+
                 }
             }
         }
@@ -758,7 +775,7 @@ namespace Command_Board {
                 shapePen.Width = 9f;
 
                 if (state.values[displayedRowIndex][displayedColumnIndex] != 0) {
-                    String s = state.values[displayedRowIndex][displayedColumnIndex].ToString();
+                    String s = (state.values[displayedRowIndex][displayedColumnIndex]+ UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex],state.lvls[displayedRowIndex][displayedColumnIndex])).ToString();
                     PointF pf = new PointF(rectangle.X + 100, rectangle.Y + 100);
                     StringFormat sf = new StringFormat();
                     Font f = new Font("Calibri", 40, FontStyle.Bold);
@@ -1195,17 +1212,23 @@ namespace Command_Board {
             Location l = new Location(col, row);
 
             //0 is You can Buy it
-            //1 you own it
-            //2 you have to pay
+            //1 you have to pay
+            //2 you own it
+            //3 checkpoint or home and you can upgrade whichever
             int path = 0;
             int personReceivingMoney = 0;
-            for (int i = 0; i < state.numOfPlayers; i++) {
-                if (state.owned[i].Contains(l)) {
-                    if (i == playerNumber - 1) {
-                        path = 1;
-                    } else {
-                        path = 2;
-                        personReceivingMoney = i;
+
+            if (state.types[row][col] == (int)SquareType.Home || state.types[row][col] == (int)SquareType.Checkpoints)
+                path = 3;
+            else {
+                for (int i = 0; i < state.numOfPlayers; i++) {
+                    if (state.owned[i].Contains(l)) {
+                        if (i == playerNumber - 1) {
+                            path = 1;
+                        } else {
+                            path = 2;
+                            personReceivingMoney = i;
+                        }
                     }
                 }
             }
@@ -1225,7 +1248,7 @@ namespace Command_Board {
                     drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());
                 }
                 //Update Total Values method
-            } else if (path == 1) {
+            } else if (path == 2) {
                 players[playerNumber - 1].cash -= TollAmount(state.values[row][col], state.lvls[row][col]);
                 players[personReceivingMoney].cash += TollAmount(state.values[row][col], state.lvls[row][col]);
                 //Update Total Values method
@@ -1236,8 +1259,17 @@ namespace Command_Board {
                 } else {
                     finishButton_Click(new object(), new EventArgs());
                 }
-            } else if (path == 2) {
-                DialogResult = MessageBox.Show("Would you like to upgrade this Property?", "Upgrade?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            } else if (path == 1) {
+                DialogResult = MessageBox.Show("Would you like to upgrade this specific Property?", "Upgrade?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (DialogResult == DialogResult.Yes) {
+                    mustUpgradeColumn = col;
+                    mustUpgradeRow = row;
+                    upgradeAllowed = true;
+                } else {
+                    finishButton_Click(new object(), new EventArgs());
+                }
+            } else if (path == 3) {
+                DialogResult = MessageBox.Show("Would you like to upgrade any Property? If yes select which.", "Upgrade?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (DialogResult == DialogResult.Yes) {
                     upgradeAllowed = true;
                 } else {
@@ -1251,6 +1283,74 @@ namespace Command_Board {
         }
 
         private void finishButton_Click(object sender, EventArgs e) {
+            upgradeAllowed = false;
+            rolled = 0;
+            isRolling = 0;
+            mustUpgradeColumn = -1;
+            mustUpgradeRow = -1;
+            turns++;
+            proxy.setTurns(turns);
+            proxy.setPlayer(playerNumber-1, players[playerNumber-1]);
+            proxy.setState(state);
+        }
+
+        private void upgradeButton_Click(object sender, EventArgs e) {
+            if (upgradeAllowed) {
+                Location l;
+                if (mustUpgradeRow == -1) {
+                    l = new Location(displayedColumnIndex, displayedRowIndex);
+                } else if (mustUpgradeRow != displayedRowIndex || mustUpgradeColumn != displayedColumnIndex) {
+                    MessageBox.Show("You can only upgrade the property you landed on");
+                    return;
+                } else
+                    l = new Location(displayedColumnIndex, displayedRowIndex);
+
+                if (state.owned[playerNumber - 1].Contains(l) == true) {
+                    if (radioButton0.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 0) {
+                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 0);
+                        state.lvls[displayedRowIndex][displayedColumnIndex] = 0;
+                    } else if (radioButton1.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 1) {
+                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 1) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                        state.lvls[displayedRowIndex][displayedColumnIndex] = 1;
+                    } else if (radioButton2.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 2) {
+                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 2) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                        state.lvls[displayedRowIndex][displayedColumnIndex] = 2;
+                    } else if (radioButton3.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 3) {
+                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 3) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]); 
+                        state.lvls[displayedRowIndex][displayedColumnIndex] = 3;
+                    } else if (radioButton4.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 4) {
+                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 4) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                        state.lvls[displayedRowIndex][displayedColumnIndex] = 4;
+                    } else {
+                        MessageBox.Show("You can't upgrade to the same level -_-\"");
+                        return;
+                    }
+
+                    tollLabel.Text = "Toll : " + TollAmount(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                    levelLabel.Text = "Current Level: " + state.lvls[displayedRowIndex][displayedColumnIndex];
+                    int totalValueAlready = UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
+                    for (int i = 0; i < 5; i++) {
+                        ((RadioButton)radioPanel.Controls[i]).Checked = false;
+                        if (state.lvls[displayedRowIndex][displayedColumnIndex] >= i)
+                            radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, 0, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
+                        else
+                            radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex],i) - totalValueAlready, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
+
+                        if (players[playerNumber - 1].cash < UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], i) - totalValueAlready)
+                            radioPanel.Controls[i].Enabled = false;
+                        else
+                            radioPanel.Controls[i].Enabled = true;
+                    }
+
+                    MessageBox.Show("Upgraded!");
+                    upgradeAllowed = false;
+                } else {
+                    MessageBox.Show("You don't own this property");
+                    return;
+                }
+            } else {
+                MessageBox.Show("You can't upgrade properties unless you've landed on it, home, or a checkpoint.");
+            }
 
         }
 

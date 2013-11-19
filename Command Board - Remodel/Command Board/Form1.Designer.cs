@@ -37,6 +37,7 @@
             this.turnLabel = new System.Windows.Forms.Label();
             this.personsTurn = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.upgradeButton = new System.Windows.Forms.Button();
             this.deleteButton = new System.Windows.Forms.Button();
             this.movesLeftLabel = new System.Windows.Forms.Label();
             this.submitButton = new System.Windows.Forms.Button();
@@ -49,15 +50,16 @@
             this.selectionBox1 = new System.Windows.Forms.ComboBox();
             this.propertiesPanel = new System.Windows.Forms.Panel();
             this.levelPanel = new System.Windows.Forms.Panel();
+            this.radioPanel = new System.Windows.Forms.Panel();
+            this.radioButton0 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tollLabel = new System.Windows.Forms.Label();
             this.levelLabel = new System.Windows.Forms.Label();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton0 = new System.Windows.Forms.RadioButton();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.propertyLayoutPanel = new CustomFlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.playerPanels = new System.Windows.Forms.Panel();
@@ -69,6 +71,7 @@
             this.panel1.SuspendLayout();
             this.propertiesPanel.SuspendLayout();
             this.levelPanel.SuspendLayout();
+            this.radioPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -141,6 +144,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.Controls.Add(this.upgradeButton);
             this.panel2.Controls.Add(this.deleteButton);
             this.panel2.Controls.Add(this.movesLeftLabel);
             this.panel2.Controls.Add(this.submitButton);
@@ -154,6 +158,17 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(605, 516);
             this.panel2.TabIndex = 14;
+            // 
+            // upgradeButton
+            // 
+            this.upgradeButton.Location = new System.Drawing.Point(208, 416);
+            this.upgradeButton.Name = "upgradeButton";
+            this.upgradeButton.Size = new System.Drawing.Size(213, 23);
+            this.upgradeButton.TabIndex = 23;
+            this.upgradeButton.Text = "Upgrade";
+            this.upgradeButton.UseVisualStyleBackColor = true;
+            this.upgradeButton.Visible = false;
+            this.upgradeButton.Click += new System.EventHandler(this.upgradeButton_Click);
             // 
             // deleteButton
             // 
@@ -203,14 +218,14 @@
             this.panel1.Controls.Add(this.skillButton);
             this.panel1.Location = new System.Drawing.Point(0, 416);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(218, 100);
+            this.panel1.Size = new System.Drawing.Size(202, 100);
             this.panel1.TabIndex = 19;
             // 
             // finishButton
             // 
-            this.finishButton.Location = new System.Drawing.Point(108, 46);
+            this.finishButton.Location = new System.Drawing.Point(110, 46);
             this.finishButton.Name = "finishButton";
-            this.finishButton.Size = new System.Drawing.Size(102, 36);
+            this.finishButton.Size = new System.Drawing.Size(90, 36);
             this.finishButton.TabIndex = 9;
             this.finishButton.Text = "Finish Turn";
             this.finishButton.UseVisualStyleBackColor = true;
@@ -218,9 +233,9 @@
             // 
             // rollButton
             // 
-            this.rollButton.Location = new System.Drawing.Point(0, 4);
+            this.rollButton.Location = new System.Drawing.Point(2, 4);
             this.rollButton.Name = "rollButton";
-            this.rollButton.Size = new System.Drawing.Size(102, 36);
+            this.rollButton.Size = new System.Drawing.Size(90, 36);
             this.rollButton.TabIndex = 7;
             this.rollButton.Text = "Roll";
             this.rollButton.UseVisualStyleBackColor = true;
@@ -228,18 +243,18 @@
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(0, 46);
+            this.updateButton.Location = new System.Drawing.Point(2, 46);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(102, 36);
+            this.updateButton.Size = new System.Drawing.Size(90, 36);
             this.updateButton.TabIndex = 6;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
             // 
             // skillButton
             // 
-            this.skillButton.Location = new System.Drawing.Point(108, 4);
+            this.skillButton.Location = new System.Drawing.Point(110, 4);
             this.skillButton.Name = "skillButton";
-            this.skillButton.Size = new System.Drawing.Size(102, 36);
+            this.skillButton.Size = new System.Drawing.Size(90, 36);
             this.skillButton.TabIndex = 8;
             this.skillButton.Text = "Skills";
             this.skillButton.UseVisualStyleBackColor = true;
@@ -272,21 +287,90 @@
             // 
             // levelPanel
             // 
+            this.levelPanel.Controls.Add(this.radioPanel);
             this.levelPanel.Controls.Add(this.label3);
             this.levelPanel.Controls.Add(this.label2);
             this.levelPanel.Controls.Add(this.tollLabel);
             this.levelPanel.Controls.Add(this.levelLabel);
-            this.levelPanel.Controls.Add(this.radioButton2);
-            this.levelPanel.Controls.Add(this.radioButton4);
-            this.levelPanel.Controls.Add(this.radioButton3);
-            this.levelPanel.Controls.Add(this.radioButton0);
-            this.levelPanel.Controls.Add(this.radioButton1);
             this.levelPanel.Location = new System.Drawing.Point(0, 207);
             this.levelPanel.Name = "levelPanel";
             this.levelPanel.Size = new System.Drawing.Size(223, 206);
             this.levelPanel.TabIndex = 25;
             this.levelPanel.Visible = false;
             this.levelPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.levelPanel_Paint);
+            // 
+            // radioPanel
+            // 
+            this.radioPanel.Controls.Add(this.radioButton0);
+            this.radioPanel.Controls.Add(this.radioButton1);
+            this.radioPanel.Controls.Add(this.radioButton2);
+            this.radioPanel.Controls.Add(this.radioButton3);
+            this.radioPanel.Controls.Add(this.radioButton4);
+            this.radioPanel.Location = new System.Drawing.Point(0, 83);
+            this.radioPanel.Name = "radioPanel";
+            this.radioPanel.Size = new System.Drawing.Size(200, 124);
+            this.radioPanel.TabIndex = 24;
+            // 
+            // radioButton0
+            // 
+            this.radioButton0.AutoSize = true;
+            this.radioButton0.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton0.Location = new System.Drawing.Point(3, 0);
+            this.radioButton0.Name = "radioButton0";
+            this.radioButton0.Size = new System.Drawing.Size(202, 22);
+            this.radioButton0.TabIndex = 1;
+            this.radioButton0.TabStop = true;
+            this.radioButton0.Text = "Level 1. 40243 | 23332";
+            this.radioButton0.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton1.Location = new System.Drawing.Point(3, 28);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(122, 22);
+            this.radioButton1.TabIndex = 2;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton2";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton2.Location = new System.Drawing.Point(3, 51);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(122, 22);
+            this.radioButton2.TabIndex = 23;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "radioButton5";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Enabled = false;
+            this.radioButton3.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton3.Location = new System.Drawing.Point(3, 77);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(122, 22);
+            this.radioButton3.TabIndex = 3;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "radioButton3";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            this.radioButton4.AutoSize = true;
+            this.radioButton4.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radioButton4.Location = new System.Drawing.Point(3, 106);
+            this.radioButton4.Name = "radioButton4";
+            this.radioButton4.Size = new System.Drawing.Size(122, 22);
+            this.radioButton4.TabIndex = 4;
+            this.radioButton4.TabStop = true;
+            this.radioButton4.Text = "radioButton4";
+            this.radioButton4.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -327,66 +411,6 @@
             this.levelLabel.Size = new System.Drawing.Size(186, 25);
             this.levelLabel.TabIndex = 24;
             this.levelLabel.Text = "Currently Level: ";
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.Location = new System.Drawing.Point(6, 131);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(122, 22);
-            this.radioButton2.TabIndex = 23;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "radioButton5";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton4.Location = new System.Drawing.Point(6, 186);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(122, 22);
-            this.radioButton4.TabIndex = 4;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "radioButton4";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton3.Location = new System.Drawing.Point(6, 157);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(122, 22);
-            this.radioButton3.TabIndex = 3;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "radioButton3";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            // 
-            // radioButton0
-            // 
-            this.radioButton0.AutoSize = true;
-            this.radioButton0.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton0.Location = new System.Drawing.Point(6, 80);
-            this.radioButton0.Name = "radioButton0";
-            this.radioButton0.Size = new System.Drawing.Size(202, 22);
-            this.radioButton0.TabIndex = 1;
-            this.radioButton0.TabStop = true;
-            this.radioButton0.Text = "Level 1. 40243 | 23332";
-            this.radioButton0.UseVisualStyleBackColor = true;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.Location = new System.Drawing.Point(6, 108);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(122, 22);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton2";
-            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // propertyLayoutPanel
             // 
@@ -464,6 +488,8 @@
             this.propertiesPanel.ResumeLayout(false);
             this.levelPanel.ResumeLayout(false);
             this.levelPanel.PerformLayout();
+            this.radioPanel.ResumeLayout(false);
+            this.radioPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,6 +533,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button finishButton;
+        private System.Windows.Forms.Button upgradeButton;
+        private System.Windows.Forms.Panel radioPanel;
     }
 }
 

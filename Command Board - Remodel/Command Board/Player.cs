@@ -32,6 +32,7 @@ namespace Command_Board
                     this._cash = value;
                     cashS = value.ToString();
                     OnPropertyChanged("cashS");
+                    //OnPropertyChanged("totalValueS");
                 }
             }
         }
