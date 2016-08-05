@@ -17,10 +17,10 @@ namespace MapCreator
         int[][] values;
         System.Drawing.Rectangle[][] rectangleGrid;
         System.Drawing.Rectangle[][] circleGrid;
-        Image smallBlueHome = Image.FromFile("C:\\Users\\DEVELOPER4\\Desktop\\smallBlueHome.png");
-        Image bigBlueHome = Image.FromFile("C:\\Users\\DEVELOPER4\\Desktop\\bigBlueHome.png");
-        Image smallBlueCloud = Image.FromFile("C:\\Users\\DEVELOPER4\\Desktop\\smallBlueCloud.png");
-        Image bigBlueCloud = Image.FromFile("C:\\Users\\DEVELOPER4\\Desktop\\bigBlueCloud.png");
+        Image smallBlueHome = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\smallBlueHome.png");
+        Image bigBlueHome = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\bigBlueHome.png");
+        Image smallBlueCloud = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\smallBlueCloud.png");
+        Image bigBlueCloud = Image.FromFile("C:\\Users\\Kelsey\\Desktop\\bigBlueCloud.png");
         int[][] types;
         int type;
         int[][] rotation;
