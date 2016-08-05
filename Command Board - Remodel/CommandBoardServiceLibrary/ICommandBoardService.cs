@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommandBoard_Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -15,10 +16,10 @@ namespace CommandBoardServiceLibrary
         void Hello();
 
         [OperationContract]
-        Command_Board.States getState();
+        States getState();
 
         [OperationContract]
-        void setState(Command_Board.States s);
+        void setState(States s);
 
         [OperationContract]
         string setConnected(int i);
@@ -33,10 +34,10 @@ namespace CommandBoardServiceLibrary
         int getTurns();
 
         [OperationContract]
-        void setPlayer(int index, Command_Board.Player player);
+        void setPlayer(int index, Player player);
 
         [OperationContract]
-        Command_Board.Player getPlayer(int index);
+        Player getPlayer(int index);
 
     }
 }

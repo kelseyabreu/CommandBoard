@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,7 +43,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Web.DynamicData" />
@@ -88,9 +88,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Command Board\Command Board.csproj">
-      <Project>{cff84801-3a50-41a6-b9d9-cff77317f961}</Project>
-      <Name>Command Board</Name>
+    <ProjectReference Include="..\CommandBoard_Data\CommandBoard_Data.csproj">
+      <Project>{6bb2d682-d574-4541-8f76-7c6f2b531c29}</Project>
+      <Name>CommandBoard_Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

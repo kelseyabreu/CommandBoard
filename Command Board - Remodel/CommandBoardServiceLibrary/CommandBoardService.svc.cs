@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommandBoard_Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -13,10 +14,10 @@ namespace CommandBoardServiceLibrary
     public class CommandBoardService : ICommandBoardService
     {
         [DataMember]
-        public Command_Board.States state;
+        public States state;
 
         [DataMember]
-        public Command_Board.Player[] players = new Command_Board.Player[4];
+        public Player[] players = new Player[4];
 
         [DataMember]
         public int connected = 0;
@@ -45,12 +46,12 @@ namespace CommandBoardServiceLibrary
         {
         }
         
-        public Command_Board.States getState()
+        public States getState()
         {
             return state;
         }
 
-        public void setState(Command_Board.States s)
+        public void setState(States s)
         {
             state = s;
         }
@@ -75,12 +76,12 @@ namespace CommandBoardServiceLibrary
             return turns;
         }
 
-        public void setPlayer(int index, Command_Board.Player player)
+        public void setPlayer(int index, Player player)
         {
             players[index] = player;
         }
 
-        public Command_Board.Player getPlayer(int index)
+        public Player getPlayer(int index)
         {
             return players[index];
         }

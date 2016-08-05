@@ -1,21 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Resources;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
 using System.Windows.Forms;
-using System.Windows;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using CommandBoardServiceLibrary;
-using Command_Board;
+using CommandBoard_Data;
 
 namespace Command_Board {
 
@@ -59,10 +51,10 @@ namespace Command_Board {
         int turns = 1;
         int direction = (int)Direction.NONE;
         States state = new States();
-        System.Drawing.Pen prevRectColor = new Pen(Color.Red, 1f);
-        System.Drawing.Pen prevShapeColor = new Pen(Color.Black, 4f);
-        System.Drawing.SolidBrush prevInnerShapeBrush = new SolidBrush(Color.Black);
-        System.Drawing.SolidBrush prevInnerRectBrush = new SolidBrush(Color.Red);
+        Pen prevRectColor = new Pen(Color.Red, 1f);
+        Pen prevShapeColor = new Pen(Color.Black, 4f);
+        SolidBrush prevInnerShapeBrush = new SolidBrush(Color.Black);
+        SolidBrush prevInnerRectBrush = new SolidBrush(Color.Red);
         List<Location> listOfSelection = new List<Location>();
         int displayedRowIndex = -1;
         int displayedColumnIndex = -1;
@@ -87,15 +79,15 @@ namespace Command_Board {
             state.gridSize = new Size(column, row);
             visible = 1;
 
-            state.rectangleGrid = converter.ToJagged(new System.Drawing.Rectangle[row, column]);
-            state.circleGrid = converter.ToJagged(new System.Drawing.Rectangle[row, column]);
-            state.rectColor = converter.ToJagged(new Color[row, column]);
-            state.shapeColor = converter.ToJagged(new Color[row, column]);
-            state.innerRectColor = converter.ToJagged(new Color[row, column]);
-            state.innerShapeColor = converter.ToJagged(new Color[row, column]);
-            state.types = converter.ToJagged(new int[row, column]);
-            state.rotation = converter.ToJagged(new int[row, column]);
-            state.values = converter.ToJagged(new int[row, column]);
+            state.rectangleGrid = Converter.ToJagged(new Rectangle[row, column]);
+            state.circleGrid = Converter.ToJagged(new Rectangle[row, column]);
+            state.rectColor = Converter.ToJagged(new Color[row, column]);
+            state.shapeColor = Converter.ToJagged(new Color[row, column]);
+            state.innerRectColor = Converter.ToJagged(new Color[row, column]);
+            state.innerShapeColor = Converter.ToJagged(new Color[row, column]);
+            state.types = Converter.ToJagged(new int[row, column]);
+            state.rotation = Converter.ToJagged(new int[row, column]);
+            state.values = Converter.ToJagged(new int[row, column]);
 
             if ((column * 50) + column > flowLayoutPanel1.Width) {
                 flowLayoutPanel1.Width = (column * 50) + column;
@@ -111,13 +103,13 @@ namespace Command_Board {
 
             this.Size = new Size(flowLayoutPanel1.Width + playerPanels.Size.Width + propertiesPanel.Width + selectionBox.Width + 150, flowLayoutPanel1.Height + cardPanel.Size.Height + 100);
 
-            System.Drawing.Graphics graphics = flowLayoutPanel1.CreateGraphics();
+            Graphics graphics = flowLayoutPanel1.CreateGraphics();
             graphics.Clear(this.BackColor);
 
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < column; j++) {
-                    System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(50 * j + j, 50 * i + i, 50, 50);
-                    System.Drawing.Rectangle shapeRect = new System.Drawing.Rectangle(50 * j + j + 5, 50 * i + i + 5, 40, 40);
+                    Rectangle rectangle = new Rectangle(50 * j + j, 50 * i + i, 50, 50);
+                    Rectangle shapeRect = new Rectangle(50 * j + j + 5, 50 * i + i + 5, 40, 40);
 
                     state.rectangleGrid[i][j] = rectangle;
                     state.circleGrid[i][j] = shapeRect;
@@ -144,10 +136,10 @@ namespace Command_Board {
 
                 DrawIt();
 
-                Color[][] innerRectColors = converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
-                Color[][] innerShapeColors = converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
-                Color[][] rectColors = converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
-                Color[][] shapeColors = converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
+                Color[][] innerRectColors = Converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
+                Color[][] innerShapeColors = Converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
+                Color[][] rectColors = Converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
+                Color[][] shapeColors = Converter.ToJagged(new Color[state.gridSize.Height, state.gridSize.Width]);
 
                 state.innerRectColor = (Color[][])bFormatter.Deserialize(inPut);
                 state.innerShapeColor = (Color[][])bFormatter.Deserialize(inPut);
@@ -208,15 +200,15 @@ namespace Command_Board {
         }
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e) {
-            System.Drawing.Graphics graphics = e.Graphics;
+            Graphics graphics = e.Graphics;
 
             int row = state.gridSize.Height;
             int column = state.gridSize.Width;
 
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < column; j++) {
-                    System.Drawing.Rectangle rectangle = state.rectangleGrid[i][j];
-                    System.Drawing.Rectangle shapeRect = state.circleGrid[i][j];
+                    Rectangle rectangle = state.rectangleGrid[i][j];
+                    Rectangle shapeRect = state.circleGrid[i][j];
 
                     prevRectColor = new Pen(state.rectColor[i][j], 1f); ;
                     prevShapeColor = new Pen(state.shapeColor[i][j], 9f);
@@ -398,43 +390,43 @@ namespace Command_Board {
             p.Controls.Add(bluePanel);
             p.Controls.Add(yellowPanel);
             p.Controls.Add(redPanel);
-            p.Location = new System.Drawing.Point(0, 0 + 100 * (i - 1));
-            p.MaximumSize = new System.Drawing.Size(200, 100);
+            p.Location = new Point(0, 0 + 100 * (i - 1));
+            p.MaximumSize = new Size(200, 100);
             p.AutoSize = true;
             p.Name = "panel";
-            p.Size = new System.Drawing.Size(200, 100);
+            p.Size = new Size(200, 100);
             p.TabIndex = 0;
             // 
             // l1
             // 
             l1.AutoSize = true;
-            l1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            l1.ForeColor = System.Drawing.Color.Yellow;
-            l1.Location = new System.Drawing.Point(14, 10);
+            l1.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            l1.ForeColor = Color.Yellow;
+            l1.Location = new Point(14, 10);
             l1.Name = "playerLabel";
-            l1.Size = new System.Drawing.Size(67, 24);
+            l1.Size = new Size(67, 24);
             l1.TabIndex = 0;
             l1.Text = "Player " + i;
             // 
             // l2
             // 
             l2.AutoSize = true;
-            l2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            l2.ForeColor = System.Drawing.Color.Yellow;
-            l2.Location = new System.Drawing.Point(13, 38);
+            l2.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            l2.ForeColor = Color.Yellow;
+            l2.Location = new Point(13, 38);
             l2.Name = "l2";
-            l2.Size = new System.Drawing.Size(62, 25);
+            l2.Size = new Size(62, 25);
             l2.TabIndex = 1;
             l2.Text = "Cash";
             // 
             // l3
             // 
             l3.AutoSize = true;
-            l3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            l3.ForeColor = System.Drawing.Color.Yellow;
-            l3.Location = new System.Drawing.Point(128, 37);
+            l3.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            l3.ForeColor = Color.Yellow;
+            l3.Location = new Point(128, 37);
             l3.Name = "cashLabel";
-            l3.Size = new System.Drawing.Size(72, 25);
+            l3.Size = new Size(72, 25);
             l3.TabIndex = 2;
             l3.DataBindings.Add(new Binding("Text", players[i - 1], "cashS"));
             //l3.Text = "1000";
@@ -442,31 +434,31 @@ namespace Command_Board {
             // l4
             // 
             l4.AutoSize = true;
-            l4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            l4.ForeColor = System.Drawing.Color.Yellow;
-            l4.Location = new System.Drawing.Point(13, 62);
+            l4.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            l4.ForeColor = Color.Yellow;
+            l4.Location = new Point(13, 62);
             l4.Name = "l4";
-            l4.Size = new System.Drawing.Size(121, 25);
+            l4.Size = new Size(121, 25);
             l4.TabIndex = 3;
             l4.Text = "Total Value";
             // 
             // l5
             // 
             l5.AutoSize = true;
-            l5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            l5.ForeColor = System.Drawing.Color.Yellow;
-            l5.Location = new System.Drawing.Point(128, 62);
+            l5.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            l5.ForeColor = Color.Yellow;
+            l5.Location = new Point(128, 62);
             l5.Name = "totalValueLabel";
-            l5.Size = new System.Drawing.Size(72, 25);
+            l5.Size = new Size(72, 25);
             l5.TabIndex = 4;
             l5.DataBindings.Add(new Binding("Text", players[i - 1], "totalValueS"));
             //l5.Text = "1000";
 
             //Green Panels
             greenPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            greenPanel.Location = new System.Drawing.Point(142, 19);
+            greenPanel.Location = new Point(142, 19);
             greenPanel.Name = "greenPanel";
-            greenPanel.Size = new System.Drawing.Size(15, 15);
+            greenPanel.Size = new Size(15, 15);
             greenPanel.TabIndex = 0;
             greenPanel.Visible = true;
             greenPanel.BackColor = SystemColors.Control;
@@ -474,27 +466,27 @@ namespace Command_Board {
             // bluePanel
             // 
             bluePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            bluePanel.Location = new System.Drawing.Point(142, 3);
+            bluePanel.Location = new Point(142, 3);
             bluePanel.Name = "bluePanel";
-            bluePanel.Size = new System.Drawing.Size(15, 15);
+            bluePanel.Size = new Size(15, 15);
             bluePanel.TabIndex = 0;
             bluePanel.BackColor = SystemColors.Control;
             // 
             // redPanel
             // 
             redPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            redPanel.Location = new System.Drawing.Point(158, 3);
+            redPanel.Location = new Point(158, 3);
             redPanel.Name = "redPanel";
-            redPanel.Size = new System.Drawing.Size(15, 15);
+            redPanel.Size = new Size(15, 15);
             redPanel.TabIndex = 5;
             redPanel.BackColor = SystemColors.Control;
             // 
             // yellowPanel
             // 
             yellowPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            yellowPanel.Location = new System.Drawing.Point(158, 19);
+            yellowPanel.Location = new Point(158, 19);
             yellowPanel.Name = "yellowPanel";
-            yellowPanel.Size = new System.Drawing.Size(15, 15);
+            yellowPanel.Size = new Size(15, 15);
             yellowPanel.TabIndex = 5;
             yellowPanel.BackColor = SystemColors.Control;
 
@@ -522,10 +514,10 @@ namespace Command_Board {
                 for (int i = 0; i < col; i++) {
                     Label l = new Label();
                     l.AutoSize = true;
-                    l.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    l.Location = new System.Drawing.Point(18 + 51 * i, 1);
+                    l.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    l.Location = new Point(18 + 51 * i, 1);
                     l.Name = "label" + i;
-                    l.Size = new System.Drawing.Size(16, 16);
+                    l.Size = new Size(16, 16);
                     l.TabIndex = 17;
                     l.Text = i.ToString();
 
@@ -543,10 +535,10 @@ namespace Command_Board {
                 for (int i = 0; i < row; i++) {
                     Label l = new Label();
                     l.AutoSize = true;
-                    l.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    l.Location = new System.Drawing.Point(4, 18 + 51 * i);
+                    l.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    l.Location = new Point(4, 18 + 51 * i);
                     l.Name = "label" + i;
-                    l.Size = new System.Drawing.Size(18, 16);
+                    l.Size = new Size(18, 16);
                     l.TabIndex = 18;
                     l.Text = ((char)((int)'A' + i)).ToString();
 
@@ -770,12 +762,12 @@ namespace Command_Board {
         }
 
         private void previewIt(Pen shapePen, Pen rectPen, SolidBrush shapeBrush, SolidBrush rectBrush) {
-            System.Drawing.Graphics graphics = propertyLayoutPanel.CreateGraphics();
+            Graphics graphics = propertyLayoutPanel.CreateGraphics();
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             graphics.Clear(Form1.DefaultBackColor);
-            System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(1, 1, 200, 200);
-            System.Drawing.Rectangle shapeRect = new System.Drawing.Rectangle(21, 21, 160, 160);
+            Rectangle rectangle = new Rectangle(1, 1, 200, 200);
+            Rectangle shapeRect = new Rectangle(21, 21, 160, 160);
 
 
             graphics.FillRectangle(rectBrush, rectangle);
@@ -1201,7 +1193,7 @@ namespace Command_Board {
             path.RemoveAt(path.Count - 1);
         }
 
-        private List<Command_Board.Location> createPath(List<Command_Board.Location> path) {
+        private List<Location> createPath(List<Location> path) {
             List<Location> onePath = new List<Location>();
             for (int i = 0; i < path.Count; i++) {
                 onePath.Add(path.ElementAt<Location>(i));
@@ -1428,10 +1420,10 @@ namespace Command_Board {
 
             int randomNum = randomCard.Next(100);
 
-            p.Location = new System.Drawing.Point(0 + 67 * (i - 1), 0);
-            p.MaximumSize = new System.Drawing.Size(67, 102);
+            p.Location = new Point(0 + 67 * (i - 1), 0);
+            p.MaximumSize = new Size(67, 102);
             p.AutoSize = false;
-            p.Size = new System.Drawing.Size(67, 102);
+            p.Size = new Size(67, 102);
             p.TabIndex = 0;
             p.BorderStyle = BorderStyle.FixedSingle;
             p.MouseClick += new System.Windows.Forms.MouseEventHandler(cardClick);
@@ -1441,11 +1433,11 @@ namespace Command_Board {
             // l1
             // 
             l.AutoSize = true;
-            l.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            l.ForeColor = System.Drawing.Color.Yellow;
-            l.Location = new System.Drawing.Point(14, 10);
+            l.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
+            l.ForeColor = Color.Yellow;
+            l.Location = new Point(14, 10);
             l.Name = "typeLabel";
-            l.Size = new System.Drawing.Size(67, 24);
+            l.Size = new Size(67, 24);
             l.TabIndex = 0;
 
             //Random
@@ -1487,28 +1479,6 @@ namespace Command_Board {
         }
     }
 
-    [Serializable]
-    public class Location : IEquatable<Location> {
-        public int column { set; get; }
-        public int row { set; get; }
-
-        public Location(int x, int y) {
-            column = x;
-            row = y;
-
-        }
-
-        override public string ToString() {
-            return "Row " + ((char)((int)'A' + row)).ToString() + " and Column " + column;
-        }
-
-        public bool Equals(Location other) {
-            if (this.row == other.row && this.column == other.column)
-                return true;
-            else
-                return false;
-        }
-    }
 }
 
 public class CustomFlowLayoutPanel : FlowLayoutPanel {
@@ -1520,38 +1490,6 @@ public class CustomFlowLayoutPanel : FlowLayoutPanel {
            true);
         UpdateStyles();
     }
-}
-
-public static class converter {
-    public static T[,] ToMultiD<T>(this T[][] jArray) {
-        int i = jArray.Count();
-        int j = jArray.Select(x => x.Count()).Aggregate(0, (current, c) => (current > c) ? current : c);
-
-
-        var mArray = new T[i, j];
-
-        for (int ii = 0; ii < i; ii++) {
-            for (int jj = 0; jj < j; jj++) {
-                mArray[ii, jj] = jArray[ii][jj];
-            }
-        }
-
-        return mArray;
-    }
-
-    public static T[][] ToJagged<T>(this T[,] mArray) {
-        var cols = mArray.GetLength(0);
-        var rows = mArray.GetLength(1);
-        var jArray = new T[cols][];
-        for (int i = 0; i < cols; i++) {
-            jArray[i] = new T[rows];
-            for (int j = 0; j < rows; j++) {
-                jArray[i][j] = mArray[i, j];
-            }
-        }
-        return jArray;
-    }
-
 }
 
 enum Direction : int {

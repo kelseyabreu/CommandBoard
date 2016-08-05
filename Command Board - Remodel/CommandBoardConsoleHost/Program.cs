@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using CommandBoardServiceLibrary;
+using CommandBoard_Data;
 
 namespace CommandBoardConsoleHost
 {
@@ -17,8 +18,8 @@ namespace CommandBoardConsoleHost
         {
             BinaryFormatter bFormatter = new BinaryFormatter();
 
-            FileStream inPut = new FileStream("C:\\Users\\Kelsey\\Desktop\\savefile\\lolblackjagged.yup", FileMode.Open, FileAccess.Read);
-            Command_Board.States state = new Command_Board.States();
+            FileStream inPut = new FileStream("C:\\Users\\DEVELOPER4\\Desktop\\savefile\\lolblackjagged.yup", FileMode.Open, FileAccess.Read);
+            States state = new States();
 
             state.gridSize = (Size)bFormatter.Deserialize(inPut);
 
@@ -31,11 +32,11 @@ namespace CommandBoardConsoleHost
             state.values = (int[][])bFormatter.Deserialize(inPut);
             state.circleGrid = (Rectangle[][])bFormatter.Deserialize(inPut);
             state.rectangleGrid = (Rectangle[][])bFormatter.Deserialize(inPut);
-            state.lvls = converter.ToJagged(new int[state.gridSize.Height,state.gridSize.Width]);
-            state.owned = new List<Command_Board.Location>[4];
+            state.lvls = Converter.ToJagged(new int[state.gridSize.Height,state.gridSize.Width]);
+            state.owned = new List<Location>[4];
 
             for (int i = 0; i < state.owned.Length; i++) {
-                state.owned[i] = new List<Command_Board.Location>();
+                state.owned[i] = new List<Location>();
             }
 
             inPut.Close();
@@ -57,14 +58,12 @@ namespace CommandBoardConsoleHost
 
                 host.AddServiceEndpoint(typeof(
                     CommandBoardServiceLibrary.ICommandBoardService),
-                    new NetTcpBinding(),
-                    "net.tcp://localhost:9000/commandboard");
+                    new NetTcpBinding(),"net.tcp://localhost:9000/commandboard");
                 host.Open();
 
                 ICommandBoardService proxy = ChannelFactory<ICommandBoardService>.CreateChannel(
                              new NetTcpBinding(),
-                            new EndpointAddress(
-                            "net.tcp://localhost:9000/commandboard"));
+                            new EndpointAddress("net.tcp://localhost:9000/commandboard"));
 
                 proxy.setState(state);
 
