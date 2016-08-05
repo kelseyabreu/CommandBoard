@@ -8,3 +8,15 @@ C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Co
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\obj\Debug\CommandBoardConsoleHost.csprojResolveAssemblyReference.cache
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\obj\Debug\CommandBoardConsoleHost.exe
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\obj\Debug\CommandBoardConsoleHost.pdb
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\bigBlueCloud.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\bigBlueHome.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\char.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\char2.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\char3.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\char4.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\smallBlueCloud.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Resources\smallBlueHome.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Properties\Resources.resx
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Properties\Resources.Designer.cs
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Properties\Settings.Designer.cs
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\CommandBoardConsoleHost\bin\Debug\Properties\Settings.settings

@@ -50,6 +50,11 @@ namespace CommandBoardConsoleHost
             //ICommandBoardService proxy;
             using (ServiceHost host = new ServiceHost(typeof(CommandBoardServiceLibrary.CommandBoardService)))
             {
+                NetTcpBinding ntb = new NetTcpBinding();
+                NetTcpSecurity nts = new NetTcpSecurity();
+                nts.Mode = SecurityMode.None;
+                ntb.Security = nts;
+
                 host.AddServiceEndpoint(typeof(
                     CommandBoardServiceLibrary.ICommandBoardService),
                     new NetTcpBinding(),

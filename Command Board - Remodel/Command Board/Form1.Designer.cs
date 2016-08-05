@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.cardPanel = new System.Windows.Forms.Panel();
+            this.cardPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,7 @@
             this.cardPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.cardPanel.Location = new System.Drawing.Point(29, 445);
             this.cardPanel.Name = "cardPanel";
-            this.cardPanel.Size = new System.Drawing.Size(333, 100);
+            this.cardPanel.Size = new System.Drawing.Size(339, 102);
             this.cardPanel.TabIndex = 0;
             // 
             // menuStrip1
@@ -249,6 +249,7 @@
             this.updateButton.TabIndex = 6;
             this.updateButton.Text = "Update";
             this.updateButton.UseVisualStyleBackColor = true;
+            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
             // 
             // skillButton
             // 
@@ -423,7 +424,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(423, 0);
+            this.label1.Location = new System.Drawing.Point(428, -3);
             this.label1.MaximumSize = new System.Drawing.Size(90, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 40);
@@ -498,7 +499,7 @@
         #endregion
 
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Panel cardPanel;
+        private System.Windows.Forms.FlowLayoutPanel cardPanel;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;

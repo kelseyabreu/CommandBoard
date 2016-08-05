@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
 using System.Net;
@@ -24,6 +23,7 @@ namespace Command_Board {
         ICommandBoardService proxy;
         ChannelFactory<ICommandBoardService> remoteFactory;
         Player[] players = new Player[4];
+        List<int> cardsPossesed = new List<int>();
         bool win = false;
         Color[] background = { Color.Red, Color.Blue, Color.Green, Color.Black, Color.Yellow };
         Color[] propertyBackground = { Color.FromArgb(255, 106, 106), Color.FromArgb(106, 106, 255), Color.FromArgb(106, 255, 106), Color.FromArgb(97, 97, 97) };
@@ -74,7 +74,11 @@ namespace Command_Board {
             pics[1] = no;
             pics[2] = no1;
             pics[3] = no2;
+            Form4 form = new Form4();
+            form.ShowDialog();
             InitializeComponent();
+            if (form.valid == false)
+                this.Close();
         }
 
         private void DrawIt() {
@@ -227,6 +231,7 @@ namespace Command_Board {
         }
 
         public void drawSquare(int row, int column, Rectangle shapeRect, Rectangle rectangle, Graphics graphics) {
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             graphics.FillRectangle(prevInnerRectBrush, rectangle);
 
             if (state.types[row][column] == 0) {
@@ -570,6 +575,9 @@ namespace Command_Board {
 
             flowLayoutPanel1_Paint(new Object(), new PaintEventArgs(flowLayoutPanel1.CreateGraphics(), new Rectangle()));
 
+            for (int i = 0; i < 5; i++) {
+                cardPanel.Controls.Add(CreateCard(i + 1));
+            }
             ResumeLayout();
             MessageBox.Show(proxy.setConnected(1));
             playerNumber = proxy.getConnected();
@@ -603,13 +611,14 @@ namespace Command_Board {
             }
         }
 
+        Random randomRoll = new Random();
         private void rollButton_Click(object sender, EventArgs e) {
             if (everyoneConnected() && ((proxy.getTurns() % state.numOfPlayers) == (playerNumber - 1)) && rolled == 0) {
-                Random r = new Random();
+
                 String s = "You rolled a: ";
                 int k;
                 for (int i = 0; i < numberOfRolls; i++) {
-                    k = r.Next(6) + 1;
+                    k = randomRoll.Next(6) + 1;
                     s += k + " ";
                     rolled += k;
                 }
@@ -617,6 +626,7 @@ namespace Command_Board {
                 MessageBox.Show(s + ". A total of " + rolled);
                 isRolling = 1;
             }
+            submitButton.Select();
         }
 
         private bool everyoneConnected() {
@@ -761,6 +771,8 @@ namespace Command_Board {
 
         private void previewIt(Pen shapePen, Pen rectPen, SolidBrush shapeBrush, SolidBrush rectBrush) {
             System.Drawing.Graphics graphics = propertyLayoutPanel.CreateGraphics();
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
             graphics.Clear(Form1.DefaultBackColor);
             System.Drawing.Rectangle rectangle = new System.Drawing.Rectangle(1, 1, 200, 200);
             System.Drawing.Rectangle shapeRect = new System.Drawing.Rectangle(21, 21, 160, 160);
@@ -775,7 +787,7 @@ namespace Command_Board {
                 shapePen.Width = 9f;
 
                 if (state.values[displayedRowIndex][displayedColumnIndex] != 0) {
-                    String s = (state.values[displayedRowIndex][displayedColumnIndex]+ UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex],state.lvls[displayedRowIndex][displayedColumnIndex])).ToString();
+                    String s = (state.values[displayedRowIndex][displayedColumnIndex] + UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex])).ToString();
                     PointF pf = new PointF(rectangle.X + 100, rectangle.Y + 100);
                     StringFormat sf = new StringFormat();
                     Font f = new Font("Calibri", 40, FontStyle.Bold);
@@ -910,7 +922,7 @@ namespace Command_Board {
                 Location point = (Location)selectionBox.Items[0];
                 endPositions.Clear();
                 checkPossibleWays(rolled, new Location(players[playerNumber - 1].column, players[playerNumber - 1].row), new Location(players[playerNumber - 1].column, players[playerNumber - 1].row), new List<Location>());
-                
+
                 //Go through each path
                 for (int i = 0; i < endPositions.Count; i++) {
                     List<Location> path = endPositions.ElementAt<List<Location>>(i);
@@ -934,7 +946,9 @@ namespace Command_Board {
                             cloudEnd = l;
                     }
                     if (endP.Equals(point) && bad) {
-                        selectionBox.Items.AddRange(path.ToArray()); 
+                        selectionBox.Items.Clear();
+                        path.RemoveAt(0);
+                        selectionBox.Items.AddRange(path.ToArray());
                         valid = true;
                         currentlyOn = endP;
                         break;
@@ -974,29 +988,71 @@ namespace Command_Board {
                 DrawChar(flowLayoutPanel1.CreateGraphics());
 
                 rolled = 0;
-                BuyPayPass(players[playerNumber - 1].row, players[playerNumber - 1].column);
-                DrawChar(flowLayoutPanel1.CreateGraphics());
 
-                //Check if any of them are checkpoints
+                //Check if any of them are checkpoints or Home
                 for (int i = 0; i < selectionBox.Items.Count; i++) {
                     Location l = (Location)selectionBox.Items[i];
 
                     //Highlight them in square
                     if (state.types[l.row][l.column] == (int)SquareType.Checkpoints) {
-                        if (state.innerShapeColor[l.row][l.column] == Color.Blue) {
+                        if (state.innerShapeColor[l.row][l.column] == Color.Blue && playerPanels.Controls[playerNumber - 1].Controls.Find("bluePanel", false)[0].BackColor != Color.Blue) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("bluePanel", false)[0].BackColor = Color.Blue;
-                        } else if (state.innerShapeColor[l.row][l.column] == Color.Green) {
+                            MessageBox.Show("Checkpoint passed!  You get a card and $700!");
+                            players[playerNumber - 1].cash += 700;
+                        } else if (state.innerShapeColor[l.row][l.column] == Color.Green && playerPanels.Controls[playerNumber - 1].Controls.Find("greenPanel", false)[0].BackColor != Color.Green) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("greenPanel", false)[0].BackColor = Color.Green;
-                        } else if (state.innerShapeColor[l.row][l.column] == Color.Yellow) {
+                            MessageBox.Show("Checkpoint passed!  You get a card and $1500!");
+                            players[playerNumber - 1].cash += 1500;
+                        } else if (state.innerShapeColor[l.row][l.column] == Color.Yellow && playerPanels.Controls[playerNumber - 1].Controls.Find("yellowPanel", false)[0].BackColor != Color.Yellow) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("yellowPanel", false)[0].BackColor = Color.Yellow;
-                        } else {
+                            MessageBox.Show("Checkpoint passed!  You get a card and $700!");
+                            players[playerNumber - 1].cash += 700;
+                        } else if (state.innerShapeColor[l.row][l.column] == Color.Red && playerPanels.Controls[playerNumber - 1].Controls.Find("redPanel", false)[0].BackColor != Color.Red) {
                             playerPanels.Controls[playerNumber - 1].Controls.Find("redPanel", false)[0].BackColor = Color.Red;
+                            MessageBox.Show("Checkpoint passed!  You get a card and $700!");
+                            players[playerNumber - 1].cash += 700;
                         }
+
+                        if (cardPanel.Controls.Count < 5)
+                            cardPanel.Controls.Add(CreateCard(0));
+
                         if (players[playerNumber - 1].checkPoints.Count < 5)
                             players[playerNumber - 1].checkPoints.Add(l);
+                    } else if (state.types[l.row][l.column] == (int)SquareType.Home) {
+                        //Checks if player has gone through each checkpoint
+                        if (playerPanels.Controls[playerNumber - 1].Controls.Find("redPanel", false)[0].BackColor == Color.Red &&
+                                                        playerPanels.Controls[playerNumber - 1].Controls.Find("greenPanel", false)[0].BackColor == Color.Green &&
+                                                        playerPanels.Controls[playerNumber - 1].Controls.Find("yellowPanel", false)[0].BackColor == Color.Yellow &&
+                                                        playerPanels.Controls[playerNumber - 1].Controls.Find("bluePanel", false)[0].BackColor == Color.Blue) {
+                            //Property Bonus
+                            int pBonus=0;
+                            for (int j = 0; j < state.owned[playerNumber - 1].Count; j++) {
+                                Location owned = state.owned[playerNumber - 1].ElementAt<Location>(j);
+                                pBonus += state.values[owned.row][owned.column] + UpgradeCost(state.values[owned.row][owned.column], state.lvls[owned.row][owned.column]);
+                            }
+                            pBonus /= 2;
+
+                            //Card Bonus
+                            int cBonus = cardPanel.Controls.Count * 100;
+
+                            //Lap Bonus
+                            int lBonus = 200;
+                            MessageBox.Show("Lap completed!\nProperty Bonus: " + pBonus + "\nCard Bonus: " + cBonus + "\nLap Bonus: " + lBonus);
+                            players[playerNumber - 1].cash += lBonus + cBonus + pBonus;
+
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("redPanel", false)[0].BackColor = SystemColors.Control;
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("greenPanel", false)[0].BackColor = SystemColors.Control;
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("yellowPanel", false)[0].BackColor = SystemColors.Control;
+                            playerPanels.Controls[playerNumber - 1].Controls.Find("bluePanel", false)[0].BackColor = SystemColors.Control;
+                        }
                     }
                 }
+
+                BuyPayPass(players[playerNumber - 1].row, players[playerNumber - 1].column);
+                DrawChar(flowLayoutPanel1.CreateGraphics());
+
                 selectionBox.Items.Clear();
+                //finishButton_Click(new Object(), new EventArgs());
             } else {
                 direction = originalDirection;
                 MessageBox.Show("Invalid Movements");
@@ -1218,9 +1274,9 @@ namespace Command_Board {
             int path = 0;
             int personReceivingMoney = 0;
 
-            if (state.types[row][col] == (int)SquareType.Home || state.types[row][col] == (int)SquareType.Checkpoints)
+            if (state.types[row][col] == (int)SquareType.Home || state.types[row][col] == (int)SquareType.Checkpoints) {
                 path = 3;
-            else {
+            } else {
                 for (int i = 0; i < state.numOfPlayers; i++) {
                     if (state.owned[i].Contains(l)) {
                         if (i == playerNumber - 1) {
@@ -1234,19 +1290,27 @@ namespace Command_Board {
             }
 
 
-            if (path == 0 && state.values[row][col] > 0 && players[playerNumber - 1].cash >= state.values[row][col]) {
+            if (path == 0 && state.values[row][col] > 0 && players[playerNumber - 1].cash >= state.values[row][col] && cardPanel.Controls.Count > 0) {
                 DialogResult = MessageBox.Show("Would you like to buy this property for " + state.values[row][col] + "?", "Purchase", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (DialogResult == DialogResult.Yes) {
-                    state.owned[playerNumber - 1].Add(l);
-                    players[playerNumber - 1].cash -= state.values[row][col];
-                    prevInnerShapeBrush = new SolidBrush(propertyBackground[playerNumber - 1]);
-                    prevInnerRectBrush = new SolidBrush(state.innerRectColor[row][col]);
-                    prevRectColor = new Pen(state.rectColor[row][col], 1f);
-                    prevShapeColor = new Pen(state.shapeColor[row][col], 9f);
+                    Form3 selectCard = new Form3(cardPanel);
+                    selectCard.ShowDialog();
+                    if (selectCard.valid && cardsToDelete[0] != null) {
+                        cardPanel.Controls.RemoveAt(selectCard.index);
 
-                    state.innerShapeColor[row][col] = propertyBackground[playerNumber - 1];
-                    drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());
+                        state.owned[playerNumber - 1].Add(l);
+                        players[playerNumber - 1].cash -= state.values[row][col];
+                        prevInnerShapeBrush = new SolidBrush(propertyBackground[playerNumber - 1]);
+                        prevInnerRectBrush = new SolidBrush(state.innerRectColor[row][col]);
+                        prevRectColor = new Pen(state.rectColor[row][col], 1f);
+                        prevShapeColor = new Pen(state.shapeColor[row][col], 9f);
+
+                        state.innerShapeColor[row][col] = propertyBackground[playerNumber - 1];
+                        drawSquare(row, col, state.circleGrid[row][col], state.rectangleGrid[row][col], flowLayoutPanel1.CreateGraphics());
+                        cardsToDelete[0] = null;
+                    }
                 }
+                finishButton_Click(new object(), new EventArgs());
                 //Update Total Values method
             } else if (path == 2) {
                 players[playerNumber - 1].cash -= TollAmount(state.values[row][col], state.lvls[row][col]);
@@ -1290,7 +1354,7 @@ namespace Command_Board {
             mustUpgradeRow = -1;
             turns++;
             proxy.setTurns(turns);
-            proxy.setPlayer(playerNumber-1, players[playerNumber-1]);
+            proxy.setPlayer(playerNumber - 1, players[playerNumber - 1]);
             proxy.setState(state);
         }
 
@@ -1316,7 +1380,7 @@ namespace Command_Board {
                         players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 2) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
                         state.lvls[displayedRowIndex][displayedColumnIndex] = 2;
                     } else if (radioButton3.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 3) {
-                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 3) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]); 
+                        players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 3) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
                         state.lvls[displayedRowIndex][displayedColumnIndex] = 3;
                     } else if (radioButton4.Checked && state.lvls[displayedRowIndex][displayedColumnIndex] < 4) {
                         players[playerNumber - 1].cash -= UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], 4) - UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], state.lvls[displayedRowIndex][displayedColumnIndex]);
@@ -1334,7 +1398,7 @@ namespace Command_Board {
                         if (state.lvls[displayedRowIndex][displayedColumnIndex] >= i)
                             radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, 0, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
                         else
-                            radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex],i) - totalValueAlready, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
+                            radioPanel.Controls[i].Text = String.Format("Level {0}. {1,5} | {2,5}", i, UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], i) - totalValueAlready, TollAmount(state.values[displayedRowIndex][displayedColumnIndex], i));
 
                         if (players[playerNumber - 1].cash < UpgradeCost(state.values[displayedRowIndex][displayedColumnIndex], i) - totalValueAlready)
                             radioPanel.Controls[i].Enabled = false;
@@ -1344,6 +1408,9 @@ namespace Command_Board {
 
                     MessageBox.Show("Upgraded!");
                     upgradeAllowed = false;
+                    mustUpgradeColumn = -1;
+                    mustUpgradeRow = -1;
+                    finishButton_Click(new Object(), new EventArgs());
                 } else {
                     MessageBox.Show("You don't own this property");
                     return;
@@ -1354,7 +1421,70 @@ namespace Command_Board {
 
         }
 
+        Random randomCard = new Random();
+        private Panel CreateCard(int i) {
+            Panel p = new Panel();
+            Label l = new Label();
 
+            int randomNum = randomCard.Next(100);
+
+            p.Location = new System.Drawing.Point(0 + 67 * (i - 1), 0);
+            p.MaximumSize = new System.Drawing.Size(67, 102);
+            p.AutoSize = false;
+            p.Size = new System.Drawing.Size(67, 102);
+            p.TabIndex = 0;
+            p.BorderStyle = BorderStyle.FixedSingle;
+            p.MouseClick += new System.Windows.Forms.MouseEventHandler(cardClick);
+            p.Margin = new Padding(0);
+
+            // 
+            // l1
+            // 
+            l.AutoSize = true;
+            l.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            l.ForeColor = System.Drawing.Color.Yellow;
+            l.Location = new System.Drawing.Point(14, 10);
+            l.Name = "typeLabel";
+            l.Size = new System.Drawing.Size(67, 24);
+            l.TabIndex = 0;
+
+            //Random
+            if (randomNum < 10) {
+                p.BackColor = Color.Black;
+                p.Name = "Black";
+                cardsPossesed.Add(0);
+                //King
+            } else if (randomNum >= 10 && randomNum < 30) {
+                p.BackColor = Color.Yellow;
+                p.Name = "Yellow";
+                cardsPossesed.Add(1);
+                //Sword
+            } else if (randomNum >= 30 && randomNum < 60) {
+                p.BackColor = Color.Red;
+                p.Name = "Red";
+                cardsPossesed.Add(2);
+                //Magic
+            } else {
+                p.BackColor = Color.Blue;
+                p.Name = "Blue";
+                cardsPossesed.Add(3);
+            }
+
+            return p;
+        }
+
+        Panel[] cardsToDelete = new Panel[5];
+        private void cardClick(object sender, MouseEventArgs e) {
+            cardsToDelete[0] = (Panel)sender;
+        }
+
+        private void updateButton_Click(object sender, EventArgs e) {
+            state = proxy.getState();
+            for (int i = 0; i < state.numOfPlayers; i++) {
+                players[i] = proxy.getPlayer(i);
+            }
+            turns = proxy.getTurns();
+        }
     }
 
     [Serializable]

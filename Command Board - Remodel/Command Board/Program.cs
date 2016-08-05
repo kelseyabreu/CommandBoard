@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Command_Board
@@ -16,7 +15,10 @@ namespace Command_Board
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Form1 f= new Form1();
+
+            if(f.IsDisposed == false)
+                Application.Run(f);
         }
     }
 }

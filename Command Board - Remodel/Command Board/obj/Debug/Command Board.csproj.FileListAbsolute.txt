@@ -24,3 +24,26 @@ C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Co
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\obj\Debug\Command Board.pdb
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\CommandBoardServiceLibrary.pdb
 C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\obj\Debug\Command Board.csprojResolveAssemblyReference.cache
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\bigBlueCloud.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\bigBlueHome.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\char.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\char2.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\char3.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\char4.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\smallBlueCloud.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Resources\smallBlueHome.png
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Properties\Resources.resx
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Properties\Resources.Designer.cs
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Properties\Settings.Designer.cs
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\Properties\Settings.settings
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Data.DataSetExtensions.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Data.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Deployment.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Drawing.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Runtime.Serialization.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.ServiceModel.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Windows.Forms.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Xml.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\bin\Debug\System.Xml.Linq.dll
+C:\Users\Kelsey\Documents\Visual Studio 2012\Projects\Command Board - Remodel\Command Board\obj\Debug\Command_Board.Form4.resources
